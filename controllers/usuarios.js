@@ -1,6 +1,7 @@
 import {response,request} from "express"
-import {Usuario} from '../models/usuario.js'
 import bcryptjs from 'bcryptjs';
+
+import {Usuario} from '../models/usuario.js'
 
 export const usuariosGet = (req = request, res = response) => {
 
