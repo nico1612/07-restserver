@@ -32,4 +32,4 @@ const UsuarioSchema= Schema({
     }
 })
 
-export const usuario= model("usuario",UsuarioSchema)
+export const Usuario= model("usuario",UsuarioSchema)

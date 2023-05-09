@@ -1,4 +1,5 @@
 import {response,request} from "express"
+import {Usuario} from '../models/usuario.js'
 
 export const usuariosGet = (req = request, res = response) => {
 
@@ -14,14 +15,16 @@ export const usuariosGet = (req = request, res = response) => {
     });
 }
 
-export const usuariosPost = (req, res = response) => {
+export const usuariosPost = async (req, res = response) => {
 
-    const { nombre, edad } = req.body;
+    const {nombre,email,password,rol} = req.body;
+    const usuario= new Usuario(body)
+
+    await usuario.save()
 
     res.json({
         msg: 'post API - usuariosPost',
-        nombre, 
-        edad
+        usuario
     });
 }
 
