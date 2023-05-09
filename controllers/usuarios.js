@@ -1,5 +1,6 @@
 import {response,request} from "express"
 import {Usuario} from '../models/usuario.js'
+import bcryptjs from 'bcryptjs';
 
 export const usuariosGet = (req = request, res = response) => {
 
@@ -17,8 +18,20 @@ export const usuariosGet = (req = request, res = response) => {
 
 export const usuariosPost = async (req, res = response) => {
 
-    const {nombre,email,password,rol} = req.body;
-    const usuario= new Usuario(body)
+    const {nombre,correo,password,rol} = req.body;
+    const usuario= new Usuario({nombre,correo,password,rol})
+
+    //verificar si el usuario existe
+    const existeMail= await Usuario.findOne({correo})
+    if(existeMail){
+        return res.status(400).json({
+            msg:'Ese correo ya existe'
+        })
+    }
+
+    //encriptar la contraseña
+    const salt =bcryptjs.genSaltSync()
+    usuario.password=bcryptjs.hashSync(password,salt)
 
     await usuario.save()
 
