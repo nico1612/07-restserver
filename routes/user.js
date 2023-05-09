@@ -1,11 +1,15 @@
 import {Router} from 'express'
-import { usuariosDelete, usuariosGet, usuariosPatch, usuariosPost, usuariosPut } from '../controllers/usuarios'
+import { usuariosGet,
+    usuariosPut,
+    usuariosPost,
+    usuariosDelete,
+    usuariosPatch } from '../controllers/usuarios.js';
 
 export const router=Router()
 
 router.get('/', usuariosGet)
 
-router.put('/', usuariosPut)
+router.put('/:id', usuariosPut)
 
 router.post('/', usuariosPost )
 

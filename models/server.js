@@ -8,8 +8,12 @@ export class Server{
         this.app = express()
         this.port=process.env.PORT
         this.usuariosRoutePath='/api/usuarios'
+        
         //middlewares
         this.middlewares()
+
+        // Lectura y parseo del body
+        this.app.use( express.json() );
 
         //rutas de mi apliacion
         this.routes()
@@ -20,7 +24,7 @@ export class Server{
         //CORS
         this.app.use(cors)
         //directorio publico
-        this.app.use(express.static('public'))
+        this.app.use( express.static('public') );
     }
 
     routes(){
