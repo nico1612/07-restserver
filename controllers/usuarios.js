@@ -4,7 +4,7 @@ import { Usuario } from "../models/usuario.js";
 
 export const usuariosGet = async(req = request, res = response) => {
 
-    const {limite=5,desde=0}=req.query()
+    const {limite=5,desde=0}=req.query
     const query={estado:true}
 
     const {total,usuarios} = await Promise.all([
@@ -21,18 +21,17 @@ export const usuariosGet = async(req = request, res = response) => {
 
 export const usuariosPost = async (req, res = response) => {
 
-    const {nombre,correo,password,rol} = req.body;
-    const usuario= new Usuario({nombre,correo,password,rol})
+    const { nombre, correo, password, rol } = req.body;
+    const usuario = new Usuario({ nombre, correo, password, rol });
 
+    // Encriptar la contraseña
+    const salt = bcryptjs.genSaltSync();
+    usuario.password = bcryptjs.hashSync( password, salt );
 
-    //encriptar la contraseña
-    const salt =bcryptjs.genSaltSync()
-    usuario.password=bcryptjs.hashSync(password,salt)
-
-    await usuario.save()
+    // Guardar en BD
+    await usuario.save();
 
     res.json({
-        msg: 'post API - usuariosPost',
         usuario
     });
 }
