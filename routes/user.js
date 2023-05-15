@@ -4,6 +4,9 @@ import {check} from 'express-validator'
 import { usuariosGet, usuariosPut, usuariosPost, usuariosDelete, usuariosPatch } from '../controllers/usuarios.js';
 import { validarCampos } from '../middlewares/validar-campos.js';
 import { emailExiste, esRolValido,existeUsuarioPorId } from '../helpers/db-validators.js';
+//import { tieneRol,esAdminRole,validarCampos,validarJWT } from '../middlewares';
+import { validarJWT } from '../middlewares/validar-jwt.js';
+import { esAdminRole,tieneRol } from '../middlewares/validar-roles.js';
 
 export const router=Router()
 
@@ -27,6 +30,9 @@ router.post('/',[
 ], usuariosPost )
 
 router.delete('/:id',[
+    validarJWT,
+    //esAdminRole,
+    tieneRol('ADMIN_ROLE','VENTAS_ROLE'),
     check('id','El nombre es obligatorio'),
     check('id').custom(existeUsuarioPorId),
     validarCampos
