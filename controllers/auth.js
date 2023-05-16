@@ -10,7 +10,7 @@ export const login = async (req,res=response)=>{
     const { correo, password } = req.body;
 
     try {
-      
+
         // Verificar si el email existe
         const usuario = await Usuario.findOne({ correo });
         if ( !usuario ) {
@@ -53,7 +53,7 @@ export const login = async (req,res=response)=>{
 export const googleSignIn=async(req,res=response)=>{
 
     const { id_token } = req.body;
-    
+
     try {
         const { correo, nombre, img } = await googleVerify( id_token );
 

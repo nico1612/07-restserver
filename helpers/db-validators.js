@@ -1,7 +1,6 @@
 import {Role} from '../models/rol.js'
 import {Usuario} from '../models/usuario.js'
 
-
 export const esRolValido =async(rol='')=>{
     const existeRol = await Role.findOne({ rol });
     if ( !existeRol ) {

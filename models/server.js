@@ -4,7 +4,6 @@ import {router} from '../routes/user.js';
 import { dbConnection } from '../database/config.js';
 import { routerAuth} from '../routes/auth.js'
 
-
 export class Server{
 
     constructor(){
@@ -12,7 +11,7 @@ export class Server{
         this.port=process.env.PORT
         this.usuariosPath='/api/usuarios'
         this.authPath='/api/auth';
-        
+
         //middlewares
         this.middlewares()
 

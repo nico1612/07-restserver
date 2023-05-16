@@ -22,7 +22,7 @@ export const esAdminRole=(req,res=response,next)=>{
 export const tieneRol=(...roles)=>{
     
     return(req,res=response,next)=>{
-        
+
         if(!req.usuario){
             return req.status(500).json({
                 msg:'Se requiere verificar el role sin validar el token primero'

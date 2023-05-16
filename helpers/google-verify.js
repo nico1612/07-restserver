@@ -9,12 +9,12 @@ export async function googleVerify(token='') {
         // Or, if multiple clients access the backend:
         //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
     });
-  
+
     const { name: nombre, 
             picture: img, 
             email: correo
-          } = ticket.getPayload();
-    
+    } = ticket.getPayload();
+
     return { nombre, img, correo };
-  
+
 }
