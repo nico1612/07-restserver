@@ -13,19 +13,19 @@ export const router=Router()
 router.get('/', usuariosGet)
 
 router.put('/:id',[
-    check('nombre','el nombre es obligatorio').not().isEmpty(),
-    check('password', 'el password debe ser más de 6 letras').isLength({min:6}),
-    check('correo','el correo no es valido').isEmail(),
-    check('rol','El rol no es un rol valido').isIn(['ADMIN_ROL','USER_ROL']),
-    check('rol').custom(esRolValido),
-    check('correo').custom(emailExiste),
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( existeUsuarioPorId ),
+    check('rol').custom( esRolValido ), 
     validarCampos
 ], usuariosPut)
 
 router.post('/',[
-    check('id','El nombre es obligatorio'),
-    check('id').custom(existeUsuarioPorId),
-    check('rol').custom(esRolValido),
+    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    check('password', 'El password debe de ser más de 6 letras').isLength({ min: 6 }),
+    check('correo', 'El correo no es válido').isEmail(),
+    check('correo').custom( emailExiste ),
+    // check('rol', 'No es un rol válido').isIn(['ADMIN_ROLE','USER_ROLE']),
+    check('rol').custom( esRolValido ), 
     validarCampos
 ], usuariosPost )
 
