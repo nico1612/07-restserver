@@ -3,14 +3,18 @@ import cors from 'cors'
 import {router} from '../routes/user.js';
 import { dbConnection } from '../database/config.js';
 import { routerAuth} from '../routes/auth.js'
+import {routerCategoria} from '../routes/categorias.js'
 
 export class Server{
 
     constructor(){
         this.app = express()
         this.port=process.env.PORT
-        this.usuariosPath='/api/usuarios'
-        this.authPath='/api/auth';
+        this.path={
+            auth:'/api/auth',
+            categorias:'/api/categorias',
+            usuarios:'/api/usuarios'
+        }
 
         //middlewares
         this.middlewares()
@@ -38,8 +42,10 @@ export class Server{
     }
 
     routes(){
-        this.app.use( this.authPath,routerAuth);
-        this.app.use(this.usuariosPath, router)
+        this.app.use( this.path.auth,routerAuth);
+        this.app.use( this.path.categorias,routerCategoria);
+
+        this.app.use(this.path.usuarios, router)
     }
 
     listen(){
