@@ -19,8 +19,8 @@ export const emailExiste = async (correo='')=>{
 
 export const existeUsuarioPorId = async (id='')=>{
     //verificar si el usuario existe
-    const existeUsuario= await Usuario.findById({id})
-    if(!existeUsuario){
-        throw new Error(`El id: ${id} no existe`)
+    const existeUsuario = await Usuario.findById(id);
+    if ( !existeUsuario ) {
+        throw new Error(`El id no existe ${ id }`);
     }
 }

@@ -31,10 +31,10 @@ router.post('/',[
 
 router.delete('/:id',[
     validarJWT,
-    //esAdminRole,
-    tieneRol('ADMIN_ROLE','VENTAS_ROLE'),
-    check('id','El nombre es obligatorio'),
-    check('id').custom(existeUsuarioPorId),
+    // esAdminRole,
+    tieneRol('ADMIN_ROL', 'VENTAR_ROL','OTRO_ROL'),
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( existeUsuarioPorId ),
     validarCampos
 ], usuariosDelete )
 
