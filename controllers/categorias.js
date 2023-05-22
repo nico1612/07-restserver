@@ -1,5 +1,5 @@
 import { response } from "express";
-import { Categoria } from "../models/categoria";
+import { Categoria } from "../models/categoria.js";
 
 
 export const obtenerCategorias=async(req, res=response)=>{
@@ -22,16 +22,18 @@ export const obtenerCategorias=async(req, res=response)=>{
 
 export const obtenerCategoria=async(req, res=response)=>{
 
-    const {id}=req.params
+    const { id } = req.params;
+    const categoria = await Categoria.findById( id )
+                            .populate('usuario', 'nombre');
 
-    const categoria=  await Categoria.findById(id).populate('usuario','nombre')
+    res.json( categoria );
 }
 
 export const crearCategoria= async (req, res=response)=>{
 
     const nombre= req.body.nombre.toUpperCase()
 
-    const categoriaDB= await Categoria().findOne({nombre})
+    const categoriaDB= await Categoria.findOne({nombre})
 
     if(categoriaDB){
         return res.json(400).json({

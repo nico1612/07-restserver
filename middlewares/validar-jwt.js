@@ -5,25 +5,26 @@ import { Usuario } from "../models/usuario.js";
 
 export const validarJWT = async (req=request,res=response,next)=>{
 
-    const token = req.header('x-token')
+    const token = req.header('x-token');
 
-    if(!token){
+    if ( !token ) {
         return res.status(401).json({
-            msg:'no hay token en la petición'
-        })
+            msg: 'No hay token en la petición'
+        });
     }
 
     try{
+        const { uid } = jwt.verify( token, process.env.SECRETORPRIVATEKEY );
 
-        const {uid} =jwt.verify(token,process.env.SECRETORPRIVATEKEY)
+        // leer el usuario que corresponde al uid
+        const usuario = await Usuario.findById( uid );
 
-        const usuario=await Usuario.findById(uid)
-
-        if(!usuario){
+        if( !usuario ) {
             return res.status(401).json({
-                msg:'token no valido - usuario no existe en la DB'
+                msg: 'Token no válido - usuario no existe DB'
             })
         }
+
         if(!usuario.estado){
             return res.status(401).json({
                 msg:'Token no valido- usuario con estado:false'
