@@ -57,7 +57,6 @@ export const crearProducto= async (req, res=response)=>{
     res.status(201).json({
         producto
     })
-
 }
 
 export const actualizarCategoria =async(req, res=response)=>{

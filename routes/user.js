@@ -39,4 +39,3 @@ router.delete('/:id',[
 ], usuariosDelete )
 
 router.patch('/', usuariosPatch )
-

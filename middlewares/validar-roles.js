@@ -20,7 +20,7 @@ export const esAdminRole=(req,res=response,next)=>{
 }
 
 export const tieneRol=(...roles)=>{
-    
+
     return(req,res=response,next)=>{
 
         if(!req.usuario){
