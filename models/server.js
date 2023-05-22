@@ -7,6 +7,8 @@ import { routerAuth} from '../routes/auth.js'
 import {routerCategoria} from '../routes/categorias.js'
 import { routerProducto } from '../routes/productos.js';
 import { routerBuscar } from '../routes/buscar.js';
+import { routerUploads } from '../routes/uploads.js';
+import fileUpload from 'express-fileupload';
 
 export class Server{
 
@@ -18,7 +20,8 @@ export class Server{
             buscar:    '/api/buscar',
             categorias:'/api/categorias',
             productos: '/api/productos',
-            usuarios:  '/api/usuarios'
+            usuarios:  '/api/usuarios',
+            uploads:   '/api/uploads'
         }
 
         //middlewares
@@ -42,8 +45,19 @@ export class Server{
 
         //CORS
         this.app.use(cors())
+
+        //Lectura y parseo del body
+        this.app.use((express.json()))
+
         //directorio publico
         this.app.use( express.static('public') );
+
+        //fileUpload - carga de archivos
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/'
+        }));
+        
     }
 
     routes(){
@@ -51,7 +65,9 @@ export class Server{
         this.app.use( this.path.buscar,routerBuscar);
         this.app.use( this.path.categorias,routerCategoria);
         this.app.use( this.path.productos,routerProducto);
-        this.app.use(this.path.usuarios, router)
+        this.app.use(this.path.usuarios, router);
+        this.app.use(this.path.uploads, routerUploads)
+;
     }
 
     listen(){
