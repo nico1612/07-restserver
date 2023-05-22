@@ -1,5 +1,6 @@
 import {Router} from 'express'
 import {check} from 'express-validator'
+
 import { validarJWT } from '../middlewares/validar-jwt.js';
 import { actualizarCategoria, borrarCategoria, crearCategoria, obtenerCategoria, obtenerCategorias } from '../controllers/categorias.js';
 import { validarCampos } from '../middlewares/validar-campos.js';

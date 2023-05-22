@@ -1,5 +1,6 @@
 import {Router} from 'express'
 import {check} from 'express-validator'
+
 import { googleSignIn, login } from '../controllers/auth.js'
 import { validarCampos } from '../middlewares/validar-campos.js';
 

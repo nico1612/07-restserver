@@ -1,9 +1,12 @@
 import express from 'express'
 import cors from 'cors'
+
 import {router} from '../routes/user.js';
 import { dbConnection } from '../database/config.js';
 import { routerAuth} from '../routes/auth.js'
 import {routerCategoria} from '../routes/categorias.js'
+import { routerProducto } from '../routes/productos.js';
+import { routerBuscar } from '../routes/buscar.js';
 
 export class Server{
 
@@ -11,9 +14,11 @@ export class Server{
         this.app = express()
         this.port=process.env.PORT
         this.path={
-            auth:'/api/auth',
+            auth:      '/api/auth',
+            buscar:    '/api/buscar',
             categorias:'/api/categorias',
-            usuarios:'/api/usuarios'
+            productos: '/api/productos',
+            usuarios:  '/api/usuarios'
         }
 
         //middlewares
@@ -43,8 +48,9 @@ export class Server{
 
     routes(){
         this.app.use( this.path.auth,routerAuth);
+        this.app.use( this.path.buscar,routerBuscar);
         this.app.use( this.path.categorias,routerCategoria);
-
+        this.app.use( this.path.productos,routerProducto);
         this.app.use(this.path.usuarios, router)
     }
 
