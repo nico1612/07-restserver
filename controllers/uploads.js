@@ -1,7 +1,8 @@
 import { response } from "express";
 import path from 'path';
 import fs from 'fs'
-
+import cloudinary from 'cloudinary'
+cloudinary.v2.config(process.env.CLOUDINARY_URL)
 import { subirArchivos } from "../helpers/subir-archivo.js";
 import { Usuario } from "../models/usuario.js";
 import { Producto } from "../models/producto.js";
@@ -64,6 +65,54 @@ export const actualizarImagen=async(req,res=response)=>{
   await modelo.save();
 
   res.json({modelo})
+}
+
+export const actualizarImagenCloudinary=async(req,res=response)=>{
+
+  const {id,coleccion}=req.params
+
+  let modelo
+
+  switch(coleccion){
+    case 'usuario':
+      modelo=await Usuario.findById(id)
+      if(!modelo){
+        return res.status(400).json({
+          msg:`No existe un usuario con el id ${id}`
+        })
+      }
+
+    break;
+
+    case 'productos':
+      modelo=await Producto.findById(id)
+      if(!modelo){
+        return res.status(400).json({
+          msg:`No existe un producto con el id ${id}`
+        })
+      }
+
+    break;
+
+    default:
+      return res.status(500).json({ msg: 'Se me olvidó validar esto'});
+  }
+
+  if(!modelo.img){
+    const nombreArr = modelo.img.split('/');
+    const nombre    = nombreArr[ nombreArr.length - 1 ];
+    const [ public_id ] = nombre.split('.');
+    cloudinary.v2.uploader.destroy( public_id );
+  }
+
+  const {tempFilePath} = req.files.archivo
+  const { secure_url } = await cloudinary.v2.uploader.upload( tempFilePath );
+  modelo.img = secure_url;
+
+  await modelo.save();
+
+  res.json( modelo );
+
 }
 
 export const mostrarImagen=async(req,res=response)=>{
