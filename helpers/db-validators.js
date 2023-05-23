@@ -42,3 +42,13 @@ export const existeProductoPorId=async(id='')=>{
         throw new Error(`El id no existe ${ id }`);
     }
 }
+
+export const coleccionesPermitidas=(coleccion='',colecciones=[])=>{
+
+    const incluida=colecciones.includes(coleccion)
+
+    if(!incluida){
+        throw new Error(`La colección ${coleccion} no es permitidas, ${colecciones}`)
+    }
+    return true
+}

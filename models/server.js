@@ -43,21 +43,22 @@ export class Server{
 
     middlewares(){
 
-        //CORS
-        this.app.use(cors())
+        // CORS
+        this.app.use( cors() );
 
-        //Lectura y parseo del body
-        this.app.use((express.json()))
+        // Lectura y parseo del body
+        this.app.use( express.json() );
 
-        //directorio publico
+        // Directorio Público
         this.app.use( express.static('public') );
 
-        //fileUpload - carga de archivos
-        this.app.use(fileUpload({
+        // Fileupload - Carga de archivos
+        this.app.use( fileUpload({
             useTempFiles : true,
-            tempFileDir : '/tmp/'
+            tempFileDir : '/tmp/',
+            createParentPath: true
         }));
-        
+
     }
 
     routes(){
